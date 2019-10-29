@@ -9,9 +9,9 @@ body {
     font-family: 'PT Sans';       /* Otro ejemplo */
   }
 
-form{
-    border: ridge;
-    padding: inherit;
+.form-box{
+	border: ridge;
+	padding: 10px;
     margin-left: 6px;
 }
 .bg {
@@ -23,7 +23,7 @@ form{
 
     /* Center and scale the image nicely */
     background-position: center;
-    background-repeat: no-repeat;
+    background-repeat: repeat;
     background-size: cover;
 }
 
@@ -95,4 +95,8 @@ form{
 		td:nth-of-type(7):before { content: "Nombre Propietario"; }
 		td:nth-of-type(8):before { content: "Telefono Propietario"; }
 		td:nth-of-type(9):before { content: "Email Propietario"; }
+	}
+
+	a, a:hover{
+		color: black;
 	}
