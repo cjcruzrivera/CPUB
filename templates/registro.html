@@ -34,11 +34,13 @@
       </div>
     </div>
     <hr>
+    {%if registrado%}
     <div class="row">
       <div class="col-md-12 alert alert-success">
         REGISTRADO CORRECTAMENTE
       </div>
     </div>
+    {%endif%}
     <form action="/registro" method="POST">
       <div class="row">
         <div class="col-md-5 offset-md-1">
@@ -91,7 +93,7 @@
       <div class="form-footer inline-block">
         <div class="row ">
           <div class="col-md-5 offset-md-1">
-            <a href="#"><button class="btn bg-warning btn-block" type="button">Atrás</button></a>
+            <a href="/inicio"><button class="btn bg-warning btn-block" type="button">Atrás</button></a>
           </div>
           <div class="col-md-5">
             <button class="btn bg-success btn-block" type="submit">Guardar</button>

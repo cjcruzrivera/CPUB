@@ -3,6 +3,45 @@ html {
     height: 100%;
     margin: 0;
 }
+.btn{
+	border: 2px solid rgba(240, 173, 78, 0.75);
+}
+
+body {
+	/* Aquí el origen de la imagen */
+	background-image: url("../images/fondo.jpg");
+  
+	/* Fijar la imagen de fondo este vertical y
+	  horizontalmente y centrado */
+	background-position: center center;
+  
+	/* Esta imagen no debe de repetirse */
+	background-repeat: no-repeat;
+  
+	/* COn esta regla fijamos la imagen en la pantalla. */
+	background-attachment: fixed;
+  
+	/* La imagen ocupa el 100% y se reescala */
+	background-size: cover;
+  
+	/* Damos un color de fondo mientras la imagen está cargando  */
+	background-color: #464646;
+  }
+
+@media only screen and (max-width: 767px) {
+	body {
+	  background-image: url("../images/fondo.jpg");
+	}
+  }
+
+/* html { 
+    background-image: url("../images/fondo.jpg") no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	
+  } */
 
 body {
     font-family: Verdana;
@@ -14,18 +53,15 @@ body {
 	padding: 10px;
     margin-left: 6px;
 }
-.bg {
-    /* The image used */
+/* .bg {
     background-image: url("../images/fondo.jpg");
 
-    /* Full height */
     height: 100%;
 
-    /* Center and scale the image nicely */
     background-position: center;
     background-repeat: repeat;
     background-size: cover;
-}
+} */
 
 .card{
     display: flex;

@@ -2,7 +2,7 @@ from flask import Flask, abort, request, render_template, redirect
 
 app = Flask(__name__)
 
-@app.route('/',methods=['GET'])
+@app.route('/inicio',methods=['GET'])
 def index():
     return render_template("inicio.html")
 
