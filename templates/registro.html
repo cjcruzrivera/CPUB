@@ -41,30 +41,41 @@
       </div>
     </div>
     {%endif%}
-    <form action="/registro" method="POST">
+    <form action="/registro" method="POST" class="needs-validation" novalidate id="formData">
       <div class="row">
         <div class="col-md-5 offset-md-1">
           <h4>DATOS DE LA BICICLETA</h4>
           <div class="form-box">
             <div class="form-group">
               <label for="exampleFormControlInput1">Numero Serial</label>
-              <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="AAA-999">
+              <input required type="text" class="form-control" id="serial" placeholder="AAA-999">
+              <div class="invalid-feedback">
+                Ingrese un número serial
+              </div>
             </div>
             <div class="form-group">
               <label for="e">Marca</label>
-              <select class="form-control" name="" id="">
-                <option value="0">Seleccione la marca de su bicicleta</option>
+              <select required class="form-control select" name="marca" id="marca">
+                <option value="">Seleccione la marca de su bicicleta</option>
+                <option value="GW">GW</option>
+                <option value="SHIMANO">SHIMANO</option>
+                <option value="ROCKSHOCK">ROCKSHOCK</option>
+                <option value="BOSTON">BOSTON</option>
+                <option value="OPTIMUS">OPTIMUS</option>
+                <option value="TREK">TREK</option>
+                <option value="GRAVITY">GRAVITY</option>
               </select>
+              <div class="invalid-feedback">Seleccione una marca de bicicleta</div>
             </div>
             <div class="form-group">
               <label for="e">Modelo</label>
-              <select class="form-control" name="" id="">
-                <option value="0">Seleccione el modelo de su bicicleta</option>
-              </select>
+              <input required type="text" class="form-control" id="modelo" placeholder="MTB">
+              <div class="invalid-feedback">Registre el modelo de la bicicleta</div>
             </div>
             <div class="form-group">
               <label for="e">Color</label>
-              <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Azul">
+              <input required type="text" class="form-control" id="color" placeholder="Azul">
+              <div class="invalid-feedback">Registre el color de la bicicleta</div>
             </div>
           </div>
         </div>
@@ -74,18 +85,23 @@
           <div class="form-box">
             <div class="form-group">
               <label for="e">Documento de Identidad</label>
-              <input type="number" class="form-control" id="exampleFormControlInput1" placeholder="000000000">
+              <input required type="number" class="form-control" id="documento" placeholder="000000000">
+              <div class="invalid-feedback">Registre el documento de identidad del propietario de la bicicleta</div>
+
             </div>
             <div class="form-group">
               <label for="e">Nombre Completo</label>
-              <input type="texto" class="form-control" id="exampleFormControlInput1" placeholder="Cosme Fulanito">
+              <input required type="texto" class="form-control" id="nombre" placeholder="Ingrese nombre completo">
+              <div class="invalid-feedback">Registre el nombre completo del propietario de la bicicleta</div>
             </div>
             <div class="form-group">
               <label for="e">Telefono</label>
-              <input type="number" class="form-control" id="exampleFormControlInput1" placeholder="3000000000">
+              <input required type="number" class="form-control" id="telefono" placeholder="3000000000">
+              <div class="invalid-feedback">Registre el telefono del propietario de la bicicleta</div>
             </div>
-            <label for="exampleFormControlInput1">Email</label>
-            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+            <label for="email">Email</label>
+            <input required type="email" class="form-control" id="email" placeholder="name@example.com">
+            <div class="invalid-feedback">Registre el correo electrónico del propietario de la bicicleta</div>
           </div>
         </div>
       </div>
@@ -106,14 +122,78 @@
 
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-  </script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
     integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
   </script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+
+  <script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+      'use strict';
+      window.addEventListener('load', function () {
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.getElementsByClassName('needs-validation');
+        // Loop over them and prevent submission
+        var validation = Array.prototype.filter.call(forms, function (form) {
+          form.addEventListener('submit', function (event) {
+            if (form.checkValidity() === false) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+          }, false);
+        });
+      }, false);
+    })();
+
+    function formData() {
+      return {
+        serial: $("#serial").val().trim(),
+        marca: $("#marca").val().trim(),
+        modelo: $("#modelo").val().trim(),
+        color: $("#color").val().trim(),
+        documento: $("#documento").val().trim(),
+        nombre: $("#nombre").val().trim(),
+        telefono: $("#telefono").val().trim(),
+        email: $("#email").val().trim(),
+      }
+    }
+
+    $('#formData').submit(function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (this.checkValidity()) {
+        $.ajax({
+          type: "POST",
+          url: 'ws/registro',
+          data: formData(),
+          success: function (response) {
+            var jsonData = JSON.parse(response);
+            console.log(jsonData)
+            Swal.fire({
+              type: jsonData.type,
+              title: jsonData.title,
+              text: jsonData.mensaje,
+            })
+          },
+          error: function (response) {
+            console.log(response);
+          }
+        });
+      } else {
+        Swal.fire({
+          type: 'warning',
+          title: 'Error de Validación',
+          text: 'Compruebe los datos del formulario',
+        })
+      }
+    });
   </script>
 </body>
 
