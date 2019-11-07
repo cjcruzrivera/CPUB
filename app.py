@@ -63,6 +63,11 @@ def registro():
 def consulta():
     return render_template("consulta.html")
 
+@app.route('/detalle/<pk>', methods=["GET"])
+def detalle(pk):
+    bicicleta = {
+    }
+    return render_template("detalle.html", bicicleta=bicicleta)
 
 if __name__ == '__main__':
     app.run(debug = True, host='0.0.0.0')
