@@ -56,7 +56,7 @@ def consultar():
     registra = True
     conn = sql.connect("database.db")
     c = conn.cursor()
-    select_bici = "SELECT bici.serial, bici.marca, bici.modelo, bici.color, prop.documento, prop.nombre_completo, prop.telefono, prop.email FROM bicicleta as bici INNER JOIN propietario as prop ON bici.doc_propietario = prop.documento WHERE bici.serial = {}".format(serial)
+    select_bici = "SELECT bici.serial, bici.marca, bici.modelo, bici.color, prop.documento, prop.nombre_completo, prop.telefono, prop.email FROM bicicleta as bici INNER JOIN propietario as prop ON bici.doc_propietario = prop.documento WHERE bici.serial = '{}'".format(serial)
     c.execute(select_bici)
     records = c.fetchone()
     if records == None:
