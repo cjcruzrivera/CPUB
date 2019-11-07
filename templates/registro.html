@@ -30,17 +30,12 @@
     </div>
     <div class="row">
       <div class="col-md-4 offset-md-5 offset-4">
-        <img src="static/images/Escudo.jpg" width="80" height="80">
+        <a href="/">
+          <img src="static/images/Escudo.jpg" width="100" height="100">
+        </a>
       </div>
     </div>
     <hr>
-    {%if registrado%}
-    <div class="row">
-      <div class="col-md-12 alert alert-success">
-        REGISTRADO CORRECTAMENTE
-      </div>
-    </div>
-    {%endif%}
     <form action="/registro" method="POST" class="needs-validation" novalidate id="formData">
       <div class="row">
         <div class="col-md-5 offset-md-1">
@@ -180,8 +175,13 @@
               type: jsonData.type,
               title: jsonData.title,
               text: jsonData.mensaje,
+            }).then((result) => {
+              if (result.value) {
+                if (jsonData.type == "success") {
+                  location.href = "/detalle/" + $("#serial").val().trim();
+                }
+              }
             })
-            
           },
           error: function (response) {
             console.log(response);

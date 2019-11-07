@@ -29,86 +29,107 @@
     </div>
     <div class="row">
       <div class="col-md-4 offset-md-5 offset-4">
-        <img src="../static/images/Escudo.jpg" width="100" height="100">
+        <a href="/">
+          <img src="../static/images/Escudo.jpg" width="100" height="100">
+        </a>
       </div>
     </div>
     <hr>
+    {% if  bicicleta%}
+    <div class="row">
+      <div class="col-md-12 alert alert-success">
+        BICICLETA REGISTRADA CORRECTAMENTE
+      </div>
+    </div>
+
     <div class="row" id="table-info">
       <div class="col-md-12 ">
-          
-            {% if  bicicleta%}
-            <table class="table table-responsive table-striped">
-              <thead class="thead-light">
-                <tr>
-                  <th>
-                    Numero Serial
-                  </th>
-                  <th>
-                    Marca
-                  </th>
-                  <th>
-                    Modelo
-                  </th>
-                  <th>
-                    Color
-                  </th>
-                  <th>
-                    Antecedentes
-                  </th>
-                  <th>
-                    Documento Propietario
-                  </th>
-                  <th>
-                    Nombre Propietario
-                  </th>
-                  <th>
-                    Telefono Propietario
-                  </th>
-                  <th>
-                    Email Propietario
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    {{ bicicleta.serial }}
-                  </td>
-                  <td>
-                    GW
-                  </td>
-                  <td>
-                    Hyena
-                  </td>
-                  <td>
-                    Negra
-                  </td>
-                  <td>
-                    No registra
-                  </td>
-                  <td>
-                    16651515916
-                  </td>
-                  <td>
-                    Camilo Cruz
-                  </td>
-                  <td>
-                    3135226352
-                  </td>
-                  <td>
-                    cruz.camilo@correounivalle.edu.co
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            {% else %}
-            <div class="alert warning">
-                NO SE ENCUENTRA BICICLETA REGISTRADA CON ESE SERIAL
-            </div>
-            {% endif %}
+
+        <table class="table table-responsive table-striped">
+          <thead class="thead-light">
+            <tr>
+              <th>
+                Numero Serial
+              </th>
+              <th>
+                Marca
+              </th>
+              <th>
+                Modelo
+              </th>
+              <th>
+                Color
+              </th>
+              <th>
+                Antecedentes
+              </th>
+              <th>
+                Documento Propietario
+              </th>
+              <th>
+                Nombre Propietario
+              </th>
+              <th>
+                Telefono Propietario
+              </th>
+              <th>
+                Email Propietario
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                {{ bicicleta.serial }}
+              </td>
+              <td>
+                {{ bicicleta.marca }}
+              </td>
+              <td>
+                {{ bicicleta.modelo }}
+              </td>
+              <td>
+                {{ bicicleta.color }}
+              </td>
+              <td>
+
+                {% if bicicleta.antecedentes %}
+                <ul>
+                  {% for antecedente in bicicleta.antecedentes %}
+                  <li type="disc">{{antecedente}}</li>
+                  {% endfor %}
+                </ul>
+                {% else %}
+                No registra
+                {% endif %}
+
+              </td>
+              <td>
+                {{bicicleta.documento}}
+              </td>
+              <td>
+                {{bicicleta.nombre}}
+              </td>
+              <td>
+                {{bicicleta.telefono}}
+              </td>
+              <td>
+                {{bicicleta.email}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
 
       </div>
     </div>
+
+    {% else %}
+    <div class="row">
+      <div class="col-md-12 alert alert-warning">
+        NO SE ENCUENTRA BICICLETA REGISTRADA CON ESE SERIAL
+      </div>
+    </div>
+    {% endif %}
 
   </div>
 
@@ -116,13 +137,13 @@
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-    </script>
+  </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
     integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
-    </script>
+  </script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
-    </script>
+  </script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 
 </body>

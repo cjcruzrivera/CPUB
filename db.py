@@ -7,7 +7,7 @@ print ("Opened database successfully")
 def clean_data():
     conn.execute("DROP TABLE IF EXISTS propietario")
     conn.execute("DROP TABLE IF EXISTS bicicleta")
-
+    print("DROPED TABLES")
 if len(sys.argv)>1:
     if sys.argv[1] == "BORRAR":
         clean_data()
@@ -21,8 +21,8 @@ sql_create_propietario = """CREATE TABLE IF NOT EXISTS propietario(
 
 sql_create_bicicleta = """CREATE TABLE IF NOT EXISTS bicicleta(
                             serial text PRIMARY KEY,
-                            modelo text NOT NULL,
                             marca text NOT NULL,
+                            modelo text NOT NULL,
                             color text NOT NULL,
                             doc_propietario integer NOT NULL,
                             FOREIGN KEY (doc_propietario) REFERENCES propietario(documento)
@@ -40,6 +40,7 @@ sql_create_antecedentes = """CREATE TABLE IF NOT EXISTS antecedente(
 conn.execute(sql_create_propietario)
 conn.execute(sql_create_bicicleta)
 conn.execute(sql_create_antecedentes)
+print("CREATED TABLES")
 # conn.execute('CREATE TABLE bicicleta (serial TEXT, addr TEXT, city TEXT, pin TEXT)')
 # print "Table created successfully";
 conn.close()

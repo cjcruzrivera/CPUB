@@ -29,7 +29,9 @@
     </div>
     <div class="row">
       <div class="col-md-4 offset-md-5 offset-4">
-        <img src="static/images/Escudo.jpg" width="100" height="100">
+        <a href="/">
+          <img src="static/images/Escudo.jpg" width="100" height="100">
+        </a>
       </div>
     </div>
     <hr>
@@ -82,32 +84,32 @@
           </thead>
           <tbody>
             <tr>
-              <td>
-                AFT-987
+              <td id="serial_table">
+
               </td>
-              <td>
-                GW
+              <td id="marca">
+
               </td>
-              <td>
-                Hyena
+              <td id="modelo">
+
               </td>
-              <td>
-                Negra
+              <td id="color">
+
               </td>
-              <td>
-                No registra
+              <td id="antecedentes">
+
               </td>
-              <td>
-                16651515916
+              <td id="documento">
+
               </td>
-              <td>
-                Camilo Cruz
+              <td id="nombre">
+
               </td>
-              <td>
-                3135226352
+              <td id="telefono">
+
               </td>
-              <td>
-                cruz.camilo@correounivalle.edu.co
+              <td id="email">
+
               </td>
             </tr>
           </tbody>
@@ -119,40 +121,93 @@
 
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-    </script>
+
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
     integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
-    </script>
+  </script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
-    </script>
+  </script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 
   <script>
     function consultarSerial() {
 
       var serial = $("#serial").val();
-      if (serial == "AFT-987") {
-        $("#table-info").removeClass("d-none");
-      } else {
+      if (serial == "") {
         $("#table-info").addClass("d-none");
-
         Swal.fire({
           type: 'error',
-          title: 'Serial no encontrado',
-          text: 'El serial ' + serial + ' no se encuentra registado en la base de datos',
+          title: 'Error',
+          text: 'Ingrese un numero serial a consultar',
         })
+      } else {
+        $.ajax({
+          type: "POST",
+          url: 'ws/consulta',
+          data: {
+            serial: serial
+          },
+          success: function (response) {
+            var jsonData = JSON.parse(response);
+            console.log(jsonData)
+            if (jsonData.registra) {
+              $("#serial_table").text(jsonData.bicicleta.serial)
+              $("#marca").text(jsonData.bicicleta.marca)
+              $("#modelo").text(jsonData.bicicleta.modelo)
+              $("#color").text(jsonData.bicicleta.color)
+              $("#documento").text(jsonData.bicicleta.documento)
+              $("#nombre").text(jsonData.bicicleta.nombre)
+              $("#telefono").text(jsonData.bicicleta.telefono)
+              $("#email").text(jsonData.bicicleta.email)
+              if (jsonData.bicicleta.antecedentes.length == 0) {
+                $("#antecedentes").text("NO REGISTRA")
+              } else {
+                var html_text = "<ul>"
+                for (let i = 0; i < jsonData.bicicleta.antecedentes.length; i++) {
+                  const element = jsonData.bicicleta.antecedentes[i];
+                  html_text += "<li type='disc'>" +element+"</li>"
+                }
+                html_text += "</ul>"
+                $("#antecedentes").html(html_text)
+              }
+              $("#table-info").removeClass("d-none");
+            } else {
+              $("#table-info").addClass("d-none");
+              Swal.fire({
+                type: 'error',
+                title: 'Serial no encontrado',
+                text: 'El serial ' + serial + ' no se encuentra registado en la base de datos',
+              })
+            }
+            // Swal.fire({
+            // type: jsonData.type,
+            // title: jsonData.title,
+            // text: jsonData.mensaje,
+            // }).then((result) => {
+            // if (result.value) {
+            // if (jsonData.type == "success") {
+            // location.href = "/detalle/" + $("#serial").val().trim();
+            // }
+            // }
+            // })
+          },
+          error: function (response) {
+            console.log(response);
+          }
+        });
+
       }
 
     }
     $("#consultar").click(consultarSerial);
     $("#serial").on('keyup', function (e) {
-    if (e.keyCode === 13) {
-      consultarSerial()
-    }
-});
+      if (e.keyCode === 13) {
+        consultarSerial()
+      }
+    });
   </script>
 </body>
 

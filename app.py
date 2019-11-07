@@ -49,6 +49,43 @@ def wsRegistro():
     }
     return json.dumps(response)
 
+@app.route('/ws/consulta', methods=["POST"])
+def consultar():
+    data = request.form
+    serial = data["serial"]
+    registra = True
+    conn = sql.connect("database.db")
+    c = conn.cursor()
+    select_bici = "SELECT bici.serial, bici.marca, bici.modelo, bici.color, prop.documento, prop.nombre_completo, prop.telefono, prop.email FROM bicicleta as bici INNER JOIN propietario as prop ON bici.doc_propietario = prop.documento WHERE bici.serial = {}".format(serial)
+    c.execute(select_bici)
+    records = c.fetchone()
+    if records == None:
+        bicicleta = {}
+        registra = False
+    else:
+        antecedentes = []
+        bicicleta = {
+        "serial": records[0],
+        "marca": records[1],
+        "modelo": records[2],
+        "color": records[3],
+        "documento": records[4],
+        "nombre": records[5],
+        "telefono": records[6],
+        "email": records[7],
+        }
+        select_antecendentes = "SELECT antecedente FROM antecedente WHERE serial = {}".format(serial)
+        c.execute(select_antecendentes)
+        records = c.fetchall()
+        for record in records:
+            antecedentes.insert(0, record[0])
+        bicicleta["antecedentes"] = antecedentes
+
+    response = {
+        "registra": registra,
+        "bicicleta": bicicleta
+    }
+    return json.dumps(response)
 @app.route('/inicio',methods=['GET'])
 @app.route('/',methods=['GET'])
 def index():
@@ -65,8 +102,31 @@ def consulta():
 
 @app.route('/detalle/<pk>', methods=["GET"])
 def detalle(pk):
+    conn = sql.connect("database.db")
+    c = conn.cursor()
+    select_bici = "SELECT bici.serial, bici.marca, bici.modelo, bici.color, prop.documento, prop.nombre_completo, prop.telefono, prop.email FROM bicicleta as bici INNER JOIN propietario as prop ON bici.doc_propietario = prop.documento WHERE bici.serial = {}".format(pk)
+    c.execute(select_bici)
+    records = c.fetchone()
+    antecedentes = []
+
     bicicleta = {
+        "serial": records[0],
+        "marca": records[1],
+        "modelo": records[2],
+        "color": records[3],
+        "documento": records[4],
+        "nombre": records[5],
+        "telefono": records[6],
+        "email": records[7],
     }
+
+    select_antecendentes = "SELECT antecedente FROM antecedente WHERE serial = {}".format(pk)
+    c.execute(select_antecendentes)
+    records = c.fetchall()
+    for record in records:
+        antecedentes.insert(0, record[0])
+    bicicleta["antecedentes"] = antecedentes
+    print(bicicleta)
     return render_template("detalle.html", bicicleta=bicicleta)
 
 if __name__ == '__main__':
