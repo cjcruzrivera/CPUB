@@ -74,7 +74,7 @@ def consultar():
         "telefono": records[6],
         "email": records[7],
         }
-        select_antecendentes = "SELECT antecedente FROM antecedente WHERE serial = {}".format(serial)
+        select_antecendentes = "SELECT antecedente FROM antecedente WHERE serial = '{}'".format(serial)
         c.execute(select_antecendentes)
         records = c.fetchall()
         for record in records:
@@ -107,7 +107,7 @@ def listado():
             "telefono": record[6],
             "email": record[7],
         }
-        select_antecendentes = "SELECT antecedente FROM antecedente WHERE serial = {}".format(record[0])
+        select_antecendentes = "SELECT antecedente FROM antecedente WHERE serial = '{}'".format(record[0])
         c.execute(select_antecendentes)
         records = c.fetchall()
         for antecendente in records:
@@ -137,7 +137,8 @@ def consulta():
 def detalle(pk):
     conn = sql.connect("database.db")
     c = conn.cursor()
-    select_bici = "SELECT bici.serial, bici.marca, bici.modelo, bici.color, prop.documento, prop.nombre_completo, prop.telefono, prop.email FROM bicicleta as bici INNER JOIN propietario as prop ON bici.doc_propietario = prop.documento WHERE bici.serial = {}".format(pk)
+    select_bici = "SELECT bici.serial, bici.marca, bici.modelo, bici.color, prop.documento, prop.nombre_completo, prop.telefono, prop.email FROM bicicleta as bici INNER JOIN propietario as prop ON bici.doc_propietario = prop.documento WHERE bici.serial = '{}'".format(pk)
+    print(select_bici)
     c.execute(select_bici)
     records = c.fetchone()
     if records != None:
@@ -155,7 +156,7 @@ def detalle(pk):
             "email": records[7],
         }
 
-        select_antecendentes = "SELECT antecedente FROM antecedente WHERE serial = {}".format(pk)
+        select_antecendentes = "SELECT antecedente FROM antecedente WHERE serial = '{}'".format(pk)
         c.execute(select_antecendentes)
         records = c.fetchall()
         for record in records:
