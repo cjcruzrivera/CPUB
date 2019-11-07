@@ -6,13 +6,46 @@ app = Flask(__name__)
 
 @app.route('/ws/registro', methods=["POST"])
 def wsRegistro():
-    print(request.form)
     data = request.form
     serial = data["serial"]
+    marca = data["marca"]
+    modelo = data["modelo"]
+    color = data["color"]
+    nombre = data["nombre"]
+    documento = data["documento"]
+    telefono = data["telefono"]
+    email = data["email"]
+
+    conn = sql.connect("database.db")
+    c = conn.cursor()
+    try:
+        select_prop = "SELECT * FROM propietario WHERE documento = {}".format(documento)
+        c.execute(select_prop)
+        records = c.fetchall()
+        if len(records) == 0:
+            c.execute("INSERT INTO propietario VALUES ('{}', '{}', '{}', '{}')".format(documento, nombre, telefono, email))
+            print("SE GUARDA")
+        else:
+            print("PROPIETARIO YA GUARDADO")
+        
+        c.execute("INSERT INTO bicicleta VALUES('{}', '{}', '{}', '{}', '{}')".format(serial, marca, modelo, color, documento))
+        c.close
+        type_response = "success"
+        title = "Exito"
+        mensaje = "La bicicleta con serial {} ha sido registrada correctamente".format(serial)
+        conn.commit()
+    except sql.IntegrityError as identifier:
+            type_response = "error"
+            title = "Error"
+            mensaje = "La bicicleta con serial {} ya habia sido registrada anteriormente".format(serial)
+            pass
+    if conn:
+        conn.close
+
     response = {
-        "type": "success",
-        "title": "Exito",
-        "mensaje": "La bicicleta con serial {} ha sido registrada correctamente".format(serial),
+        "type": type_response,
+        "title": title,
+        "mensaje": mensaje,
     }
     return json.dumps(response)
 

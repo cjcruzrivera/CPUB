@@ -1,8 +1,16 @@
 import sqlite3
+import sys
 
 conn = sqlite3.connect('database.db')
 print ("Opened database successfully")
 
+def clean_data():
+    conn.execute("DROP TABLE IF EXISTS propietario")
+    conn.execute("DROP TABLE IF EXISTS bicicleta")
+
+if len(sys.argv)>1:
+    if sys.argv[1] == "BORRAR":
+        clean_data()
 
 sql_create_propietario = """CREATE TABLE IF NOT EXISTS propietario(
                             documento integer PRIMARY KEY,
