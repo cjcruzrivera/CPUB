@@ -140,25 +140,29 @@ def detalle(pk):
     select_bici = "SELECT bici.serial, bici.marca, bici.modelo, bici.color, prop.documento, prop.nombre_completo, prop.telefono, prop.email FROM bicicleta as bici INNER JOIN propietario as prop ON bici.doc_propietario = prop.documento WHERE bici.serial = {}".format(pk)
     c.execute(select_bici)
     records = c.fetchone()
-    antecedentes = []
+    if records != None:
 
-    bicicleta = {
-        "serial": records[0],
-        "marca": records[1],
-        "modelo": records[2],
-        "color": records[3],
-        "documento": records[4],
-        "nombre": records[5],
-        "telefono": records[6],
-        "email": records[7],
-    }
+        antecedentes = []
 
-    select_antecendentes = "SELECT antecedente FROM antecedente WHERE serial = {}".format(pk)
-    c.execute(select_antecendentes)
-    records = c.fetchall()
-    for record in records:
-        antecedentes.insert(0, record[0])
-    bicicleta["antecedentes"] = antecedentes
+        bicicleta = {
+            "serial": records[0],
+            "marca": records[1],
+            "modelo": records[2],
+            "color": records[3],
+            "documento": records[4],
+            "nombre": records[5],
+            "telefono": records[6],
+            "email": records[7],
+        }
+
+        select_antecendentes = "SELECT antecedente FROM antecedente WHERE serial = {}".format(pk)
+        c.execute(select_antecendentes)
+        records = c.fetchall()
+        for record in records:
+            antecedentes.insert(0, record[0])
+        bicicleta["antecedentes"] = antecedentes
+    else:
+        bicicleta = {}
     print(bicicleta)
     return render_template("detalle.html", bicicleta=bicicleta)
 

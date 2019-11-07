@@ -35,6 +35,7 @@ sql_create_antecedentes = """CREATE TABLE IF NOT EXISTS antecedente(
                             serial text NOT NULL,
                             antecedente text NOT NULL,
                             FOREIGN KEY (serial) REFERENCES bicicleta(serial)
+                            ON DELETE CASCADE
                         )"""
 
 
