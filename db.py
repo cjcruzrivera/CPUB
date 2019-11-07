@@ -7,6 +7,7 @@ print ("Opened database successfully")
 def clean_data():
     conn.execute("DROP TABLE IF EXISTS propietario")
     conn.execute("DROP TABLE IF EXISTS bicicleta")
+    conn.execute("DROP TABLE IF EXISTS antecedente")
     print("DROPED TABLES")
 if len(sys.argv)>1:
     if sys.argv[1] == "BORRAR":

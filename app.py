@@ -86,6 +86,39 @@ def consultar():
         "bicicleta": bicicleta
     }
     return json.dumps(response)
+
+@app.route('/listado', methods=["GET"])
+def listado():
+    bicicletas = []
+    conn = sql.connect("database.db")
+    c = conn.cursor()
+    select_bicis = "SELECT bici.serial, bici.marca, bici.modelo, bici.color, prop.documento, prop.nombre_completo, prop.telefono, prop.email FROM bicicleta as bici INNER JOIN propietario as prop ON bici.doc_propietario = prop.documento"
+    c.execute(select_bicis)
+    records = c.fetchall()
+    for record in records:
+        antecedentes=[]
+        bicicleta = {
+            "serial": record[0],
+            "marca": record[1],
+            "modelo": record[2],
+            "color": record[3],
+            "documento": record[4],
+            "nombre": record[5],
+            "telefono": record[6],
+            "email": record[7],
+        }
+        select_antecendentes = "SELECT antecedente FROM antecedente WHERE serial = {}".format(record[0])
+        c.execute(select_antecendentes)
+        records = c.fetchall()
+        for antecendente in records:
+            antecedentes.insert(0, antecendente[0])
+        bicicleta["antecedentes"] = antecedentes
+
+        bicicletas.insert(0,bicicleta)
+        print(bicicletas)
+    
+    return render_template("listado.html", bicicletas= bicicletas)
+
 @app.route('/inicio',methods=['GET'])
 @app.route('/',methods=['GET'])
 def index():
