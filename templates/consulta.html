@@ -30,7 +30,7 @@
     <div class="row">
       <div class="col-md-4 offset-md-5 offset-3">
         <a href="/">
-        <img src="static/images/logo_policia_nacional.png" width="140" height="105">
+          <img src="static/images/logo_policia_nacional.png" width="140" height="105">
         </a>
       </div>
     </div>
@@ -168,12 +168,20 @@
                 var html_text = "<ul>"
                 for (let i = 0; i < jsonData.bicicleta.antecedentes.length; i++) {
                   const element = jsonData.bicicleta.antecedentes[i];
-                  html_text += "<li type='disc'>" +element+"</li>"
+                  html_text += "<li type='disc'>" + element + "</li>"
                 }
                 html_text += "</ul>"
                 $("#antecedentes").html(html_text)
               }
               $("#table-info").removeClass("d-none");
+              Swal.fire({
+                type: 'success',
+                title: 'Exito',
+                text: 'Serial encontrado',
+                timer : 900,
+                showConfirmButton: false,
+
+              })
             } else {
               $("#table-info").addClass("d-none");
               Swal.fire({
@@ -182,7 +190,7 @@
                 text: 'El serial ' + serial + ' no se encuentra registado en la base de datos',
               })
             }
-            
+
           },
           error: function (response) {
             console.log(response);
