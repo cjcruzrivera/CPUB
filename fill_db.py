@@ -40,8 +40,10 @@ for i in range(1,201):
     if randint(0,1):
         if randint(0,1):
             if randint(0,1):
-                antecedente = "Se denuncia su robo el dia " + fake.date()
-                insert_ant = "INSERT INTO antecedente(serial, antecedente) VALUES('{}', '{}')".format(serial, antecedente)
+                antecedente = "Se denuncia su hurto el dia " + fake.date()
+                numeroSPOA = "Número de SPOA: {}".format(randint(500016000727200000000,540016000727201800006))
+                fiscalia = "Fiscalía: URI Paloquemao."
+                insert_ant = "INSERT INTO antecedente(serial, antecedente) VALUES('{}', '{}'), ('{}', '{}'), ('{}', '{}')".format(serial, fiscalia, serial, numeroSPOA, serial, antecedente)
                 c.execute(insert_ant)
                 print("insert_ant")
 c.close()
