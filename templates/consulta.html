@@ -1,212 +1,172 @@
-<!doctype html>
-<html lang="en">
+{% extends 'base.html' %}
 
-<head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="shortcut icon" href="static/images/icon.jpg">
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <link rel="stylesheet" href="static/css/style.css">
-  <title>CPUB</title>
-</head>
 
-<body>
-  <div class="bg container">
-    <div class="row">
-      <div class="col-md-4 offset-md-5 offset-3">
-        <h1>
-          CPUB
-        </h1>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-4 offset-md-4 offset-1">
-        <p class="lead">Control Policial del Uso de Bicicleta</p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-4 offset-md-5 offset-3">
-        <a href="/">
-          <img src="static/images/logo_policia_nacional.png" width="140" height="105">
-        </a>
-      </div>
-    </div>
-    <hr>
-    <div class="row">
-      <div class="col-md-4 offset-1">
-        INGRESE EL NÚMERO SERIAL A CONSULTAR:
-      </div>
-      <div class="col-md-4">
-        <input type="text" name="serial" id="serial" class="form-control">
-      </div>
-      <div class="col-md-3">
-        <button class="btn btn-info" id="consultar"> CONSULTAR</button>
-      </div>
-    </div>
+{% block extracss %}
+<link rel="stylesheet" href="static/css/style.css">  
+{% endblock extracss %}
+  
 
-    <br>
-    <div class="row d-none" id="table-info">
-      <div class="col-md-12 ">
-        <table class="table table-responsive table-striped">
-          <thead class="thead-light">
-            <tr>
-              <th>
-                Numero Serial
-              </th>
-              <th>
-                Marca
-              </th>
-              <th>
-                Modelo
-              </th>
-              <th>
-                Color
-              </th>
-              <th>
-                Antecedentes
-              </th>
-              <th>
-                Documento Propietario
-              </th>
-              <th>
-                Nombre Propietario
-              </th>
-              <th>
-                Telefono Propietario
-              </th>
-              <th>
-                Email Propietario
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td id="serial_table">
-
-              </td>
-              <td id="marca">
-
-              </td>
-              <td id="modelo">
-
-              </td>
-              <td id="color">
-
-              </td>
-              <td id="antecedentes">
-
-              </td>
-              <td id="documento">
-
-              </td>
-              <td id="nombre">
-
-              </td>
-              <td id="telefono">
-
-              </td>
-              <td id="email">
-
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
+{% block content %}
+<div class="row">
+  <div class="col-md-4 col-12" style="text-align: center;">
+    INGRESE EL NÚMERO SERIAL A CONSULTAR:
   </div>
+  <div class="col-md-4">
+    <input type="text" name="serial" id="serial" class="form-control">
+  </div>
+  <div class="col-md-3 col-12">
+    <button class="btn btn-info w-100" id="consultar"> CONSULTAR</button>
+  </div>
+</div>
 
-  <!-- Optional JavaScript -->
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<br>
+<div class="row d-none" id="table-info">
+  <div class="col-md-12 ">
+    <table class="table table-responsive table-striped">
+      <thead class="thead-light">
+        <tr>
+          <th>
+            Numero Serial
+          </th>
+          <th>
+            Marca
+          </th>
+          <th>
+            Modelo
+          </th>
+          <th>
+            Color
+          </th>
+          <th>
+            Antecedentes
+          </th>
+          <th>
+            Documento Propietario
+          </th>
+          <th>
+            Nombre Propietario
+          </th>
+          <th>
+            Telefono Propietario
+          </th>
+          <th>
+            Email Propietario
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td id="serial_table">
 
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
-  </script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+          </td>
+          <td id="marca">
 
-  <script>
-    function consultarSerial() {
+          </td>
+          <td id="modelo">
 
-      var serial = $("#serial").val();
-      if (serial == "") {
-        $("#table-info").addClass("d-none");
-        Swal.fire({
-          type: 'error',
-          title: 'Error',
-          text: 'Ingrese un numero serial a consultar',
-        })
-      } else {
-        $.ajax({
-          type: "POST",
-          url: 'ws/consulta',
-          data: {
-            serial: serial
-          },
-          success: function (response) {
-            var jsonData = JSON.parse(response);
-            console.log(jsonData)
-            if (jsonData.registra) {
-              $("#serial_table").text(jsonData.bicicleta.serial)
-              $("#marca").text(jsonData.bicicleta.marca)
-              $("#modelo").text(jsonData.bicicleta.modelo)
-              $("#color").text(jsonData.bicicleta.color)
-              $("#documento").text(jsonData.bicicleta.documento)
-              $("#nombre").text(jsonData.bicicleta.nombre)
-              $("#telefono").text(jsonData.bicicleta.telefono)
-              $("#email").text(jsonData.bicicleta.email)
-              if (jsonData.bicicleta.antecedentes.length == 0) {
-                $("#antecedentes").text("NO REGISTRA")
-              } else {
-                var html_text = "<ul>"
-                for (let i = 0; i < jsonData.bicicleta.antecedentes.length; i++) {
-                  const element = jsonData.bicicleta.antecedentes[i];
-                  html_text += "<li type='disc'>" + element + "</li>"
-                }
-                html_text += "</ul>"
-                $("#antecedentes").html(html_text)
-              }
-              $("#table-info").removeClass("d-none");
-              Swal.fire({
-                type: 'success',
-                title: 'Exito',
-                text: 'Serial encontrado',
-                timer : 900,
-                showConfirmButton: false,
+          </td>
+          <td id="color">
 
-              })
+          </td>
+          <td id="antecedentes">
+
+          </td>
+          <td id="documento">
+
+          </td>
+          <td id="nombre">
+
+          </td>
+          <td id="telefono">
+
+          </td>
+          <td id="email">
+
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock content %}
+
+
+
+{% block extrajs %}
+<script>
+  function consultarSerial() {
+
+    var serial = $("#serial").val();
+    if (serial == "") {
+      $("#table-info").addClass("d-none");
+      Swal.fire({
+        type: 'error',
+        title: 'Error',
+        text: 'Ingrese un numero serial a consultar',
+      })
+    } else {
+      $.ajax({
+        type: "POST",
+        url: 'ws/consulta',
+        data: {
+          serial: serial
+        },
+        success: function (response) {
+          var jsonData = JSON.parse(response);
+          console.log(jsonData)
+          if (jsonData.registra) {
+            $("#serial_table").text(jsonData.bicicleta.serial)
+            $("#marca").text(jsonData.bicicleta.marca)
+            $("#modelo").text(jsonData.bicicleta.modelo)
+            $("#color").text(jsonData.bicicleta.color)
+            $("#documento").text(jsonData.bicicleta.documento)
+            $("#nombre").text(jsonData.bicicleta.nombre)
+            $("#telefono").text(jsonData.bicicleta.telefono)
+            $("#email").text(jsonData.bicicleta.email)
+            if (jsonData.bicicleta.antecedentes.length == 0) {
+              $("#antecedentes").text("NO REGISTRA")
             } else {
-              $("#table-info").addClass("d-none");
-              Swal.fire({
-                type: 'error',
-                title: 'Serial no encontrado',
-                text: 'El serial ' + serial + ' no se encuentra registado en la base de datos',
-              })
+              var html_text = "<ul>"
+              for (let i = 0; i < jsonData.bicicleta.antecedentes.length; i++) {
+                const element = jsonData.bicicleta.antecedentes[i];
+                html_text += "<li type='disc'>" + element + "</li>"
+              }
+              html_text += "</ul>"
+              $("#antecedentes").html(html_text)
             }
+            $("#table-info").removeClass("d-none");
+            Swal.fire({
+              type: 'success',
+              title: 'Exito',
+              text: 'Serial encontrado',
+              timer: 900,
+              showConfirmButton: false,
 
-          },
-          error: function (response) {
-            console.log(response);
+            })
+          } else {
+            $("#table-info").addClass("d-none");
+            Swal.fire({
+              type: 'error',
+              title: 'Serial no encontrado',
+              text: 'El serial ' + serial + ' no se encuentra registado en la base de datos',
+            })
           }
-        });
 
-      }
+        },
+        error: function (response) {
+          console.log(response);
+        }
+      });
 
     }
-    $("#consultar").click(consultarSerial);
-    $("#serial").on('keyup', function (e) {
-      if (e.keyCode === 13) {
-        consultarSerial()
-      }
-    });
-  </script>
-</body>
 
-</html>
+  }
+  $("#consultar").click(consultarSerial);
+  $("#serial").on('keyup', function (e) {
+    if (e.keyCode === 13) {
+      consultarSerial()
+    }
+  });
+</script>
+{% endblock extrajs %}
