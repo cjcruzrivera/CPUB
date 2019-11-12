@@ -23,6 +23,5 @@
       "sizes": "192x192"
     }
   ],
-  "start_url": "/inicio",
-  "scope": "/inicio"
+  "start_url": "/"
 }
