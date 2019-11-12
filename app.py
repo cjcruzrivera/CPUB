@@ -1,4 +1,4 @@
-from flask import Flask, abort, request, render_template, redirect
+from flask import Flask, abort, request, render_template, redirect, make_response, send_from_directory
 import sqlite3 as sql 
 import json
 
@@ -166,6 +166,17 @@ def detalle(pk):
         bicicleta = {}
     print(bicicleta)
     return render_template("detalle.html", bicicleta=bicicleta)
+
+@app.route('/manifest.json')
+def manifest():
+    return send_from_directory('static', 'manifest.json')
+
+
+@app.route('/sw.js')
+def service_worker():
+    response = make_response(send_from_directory('static', 'sw.js'))
+    response.headers['Cache-Control'] = 'no-cache'
+    return response
 
 if __name__ == '__main__':
     app.run(debug = True, host='0.0.0.0')
