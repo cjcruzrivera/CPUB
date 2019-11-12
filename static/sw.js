@@ -1,12 +1,8 @@
-importScripts('/cache-polyfill.js');
+let deferredPrompt;
 
-
-self.addEventListener('install', function(e) {
- e.waitUntil(
-   caches.open('CPUB').then(function(cache) {
-     return cache.addAll([
-       '/',
-     ]);
-   })
- );
+window.addEventListener('beforeinstallprompt', (e) => {
+    // Stash the event so it can be triggered later.
+    deferredPrompt = e;
+    // Update UI notify the user they can add to home screen
+    deferredPrompt.prom
 });
