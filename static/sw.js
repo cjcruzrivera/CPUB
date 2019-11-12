@@ -2,6 +2,21 @@ console.log('Hello from sw.js');
 
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.2.0/workbox-sw.js');
 
+self.addEventListener('fetch', function(event) {
+  console.log('fetch method')
+  event.respondWith(
+    caches.match(event.request)
+      .then(function(response) {
+        // Cache hit - return response
+        if (response) {
+          return response;
+        }
+        return fetch(event.request);
+      }
+    )
+  );
+});
+
 if (workbox) {
   console.log(`Yay! Workbox is loaded 🎉`);
 
