@@ -4,6 +4,8 @@
   "description": "Aplicación de control del uso de bicicletas por parte de la Policía Nacional",
   "theme_color": "green",
   "background_color": "green",
+  "display": "standalone",
+  "orientation": "portrait",
   "icons": [
     {
       "src": "images/icons/launcher-icon-1.jpeg",
